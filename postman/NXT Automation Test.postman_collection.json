@@ -1,0 +1,1122 @@
+{
+	"info": {
+		"_postman_id": "075fa6f9-1bc4-4ae6-b7c6-dce8a6eac04c",
+		"name": "NXT Automation Test",
+		"description": "isi environment variable jwtToken\n\n{  \n\"userid\": \"3\",  \n\"role\": \"admin\"  \n}\n\nisi environment variable jwtTokenNotAdmin\n\n{  \n\"userid\": \"3\",  \n\"role\": \"user\"  \n}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21809376"
+	},
+	"item": [
+		{
+			"name": "Get Survey Data (refactorMe1)",
+			"item": [
+				{
+					"name": "Invalid Authentication",
+					"item": [
+						{
+							"name": "No Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(401);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('Token tidak valid!');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/data",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(401);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('Token tidak valid!');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{invalidJwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/data",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Must Return Appropriate Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body test\", function () {\r",
+									"    pm.expect(responseData).to.have.property('statusCode');\r",
+									"    pm.expect(responseData).to.have.property('success');\r",
+									"    pm.expect(responseData).to.have.property('data');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body value test\", function () {\r",
+									"    pm.expect(responseData.statusCode).to.be.equal(200);\r",
+									"    pm.expect(responseData.success).to.be.equal(true);\r",
+									"    pm.expect(responseData.data).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/data",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"data"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Insert Data (refactorMe2)",
+			"item": [
+				{
+					"name": "Invalid Authentication",
+					"item": [
+						{
+							"name": "No Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(401);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('Token tidak valid!');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": 2,\r\n    \"values\": [40,37,90,89]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/data/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(401);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('Token tidak valid!');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{invalidJwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": 2,\r\n    \"values\": [40,37,90,89]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/data/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Is Not An Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(401);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('Anda tidak punya akses ke endpoint ini.');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwtTokenNotAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": 2,\r\n    \"values\": [40,37,90,89]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/data/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Invalid Payload",
+					"item": [
+						{
+							"name": "userId Not Found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(404);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('user tidak ditemukan');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": 99,\r\n    \"values\": [40,37,90,89]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/data/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "userId Not Exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(400);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('\"userId\" dan \"values\" harus diisi');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"values\": [40,37,90,89]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/data/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "values Not An Array",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(400);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('\"values\" harus berupa array');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": 3,\r\n    \"values\": \"not an array\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/data/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "values Not Exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(400);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('\"userId\" dan \"values\" harus diisi');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/data/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Must Return Appropriate Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body test\", function () {\r",
+									"    pm.expect(responseData).to.have.property('statusCode');\r",
+									"    pm.expect(responseData).to.have.property('success');\r",
+									"    pm.expect(responseData).to.have.property('data');\r",
+									"    pm.expect(responseData).to.have.property('message');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body value test\", function () {\r",
+									"    pm.expect(responseData.statusCode).to.be.equal(201);\r",
+									"    pm.expect(responseData.success).to.be.equal(true);\r",
+									"    pm.expect(responseData.data).to.be.an('object');\r",
+									"\r",
+									"    pm.expect(responseData.data).to.have.property('values');\r",
+									"    pm.expect(responseData.data).to.have.property('createdAt');\r",
+									"    pm.expect(responseData.data).to.have.property('updatedAt');\r",
+									"    pm.expect(responseData.data).to.have.property('userId');\r",
+									"\r",
+									"    pm.expect(responseData.message).to.be.a('string');\r",
+									"    pm.expect(responseData.message).to.be.equal('Survey berhasil disimpan');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 2,\r\n    \"values\": [40,37,90,89]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/data/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"data",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Gruop Data",
+			"item": [
+				{
+					"name": "Invalid Authentication",
+					"item": [
+						{
+							"name": "No Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(401);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('Token tidak valid!');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/data/attack?type=scanners",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data",
+										"attack"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "scanners"
+										}
+									]
+								},
+								"description": "Header Authentication tidak diisi"
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status test\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body test\", function () {\r",
+											"    pm.expect(responseData).to.have.property('statusCode');\r",
+											"    pm.expect(responseData).to.have.property('success');\r",
+											"    pm.expect(responseData).to.have.property('data');\r",
+											"    pm.expect(responseData).to.have.property('message');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body value test\", function () {\r",
+											"    pm.expect(responseData.statusCode).to.be.equal(401);\r",
+											"    pm.expect(responseData.success).to.be.equal(false);\r",
+											"    pm.expect(responseData.data).to.be.an('object');\r",
+											"    pm.expect(responseData.message).to.be.a('string');\r",
+											"\r",
+											"    pm.expect(responseData.message).to.be.equal('Token tidak valid!');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{invalidJwtToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/data/attacks?type=scanners",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"data",
+										"attacks"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "scanners"
+										}
+									]
+								},
+								"description": "Params tidak diisi \"attack\" atau \"attacker\""
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Invalid Params",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body test\", function () {\r",
+									"    pm.expect(responseData).to.have.property('statusCode');\r",
+									"    pm.expect(responseData).to.have.property('success');\r",
+									"    pm.expect(responseData).to.have.property('data');\r",
+									"    pm.expect(responseData).to.have.property('message');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body value test\", function () {\r",
+									"    pm.expect(responseData.statusCode).to.be.equal(400);\r",
+									"    pm.expect(responseData.success).to.be.equal(false);\r",
+									"    pm.expect(responseData.data).to.be.an('object');\r",
+									"    pm.expect(responseData.message).to.be.a('string');\r",
+									"\r",
+									"    pm.expect(responseData.message).to.be.equal('position hanya boleh \"attack\" atau \"attacker\"');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/data/notfound?type=scanners",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"data",
+								"notfound"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "scanners"
+								}
+							]
+						},
+						"description": "Params tidak diisi \"attack\" atau \"attacker\""
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body test\", function () {\r",
+									"    pm.expect(responseData).to.have.property('statusCode');\r",
+									"    pm.expect(responseData).to.have.property('success');\r",
+									"    pm.expect(responseData).to.have.property('data');\r",
+									"    pm.expect(responseData).to.have.property('message');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body value test\", function () {\r",
+									"    pm.expect(responseData.statusCode).to.be.equal(400);\r",
+									"    pm.expect(responseData.success).to.be.equal(false);\r",
+									"    pm.expect(responseData.data).to.be.an('object');\r",
+									"    pm.expect(responseData.message).to.be.a('string');\r",
+									"\r",
+									"    pm.expect(responseData.message).to.be.equal('query \"type\" harus diisi');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/data/attack",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"data",
+								"attack"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "boom",
+									"disabled": true
+								}
+							]
+						},
+						"description": "query parameter \"type\" tidak diisi"
+					},
+					"response": []
+				},
+				{
+					"name": "Must Return Appropriate Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body test\", function () {\r",
+									"    pm.expect(responseData).to.have.property('statusCode');\r",
+									"    pm.expect(responseData).to.have.property('success');\r",
+									"    pm.expect(responseData).to.have.property('data');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body value test\", function () {\r",
+									"    pm.expect(responseData.statusCode).to.be.equal(200);\r",
+									"    pm.expect(responseData.success).to.be.equal(true);\r",
+									"    pm.expect(responseData.data).to.be.an('object');\r",
+									"    pm.expect(responseData.data).to.have.property('label');\r",
+									"    pm.expect(responseData.data.label).to.be.an('array');\r",
+									"    pm.expect(responseData.data).to.have.property('total');\r",
+									"    pm.expect(responseData.data.total).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwtToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/data/attack?type=scanners",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"data",
+								"attack"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "scanners"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

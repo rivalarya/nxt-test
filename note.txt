@@ -1,0 +1,9 @@
+- untuk poin no 2, saya buatkan file websocketClient.js untuk meng-test apakah endpoint "/data" socket berjalan atau tidak. jalankan file websocketClient.js untuk connect menjadi client di projek test ini
+
+- untuk poin no 6 saya buat menggunakan automation postman karena untuk test endpoint seharusnya menggunakan integration test, bukan dengan unit test. Untuk file nya saya simpan di folder "postman"
+
+- untuk database saya menambahkan table attack_data, jadi sebelum menjalankan projek ini harap di import terlebih dahulu database.sql nya
+
+- saya membuat file, "jawaban versi chatgpt.md" untuk menyimpan hasil pertanyaan saya untuk memenuhi poin no 0 di, "readme.md". untuk kode versi saya tidak saya dokumentasikan, kode versi saya bisa dilihat langsung pada fungsi-fungsi yang ada
+
+- untuk file .env ada sedikit perbedaan untuk menyimpan config redis, jadi saya merubah file .env.example
